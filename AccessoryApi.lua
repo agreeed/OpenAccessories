@@ -14,6 +14,7 @@ private.AccessoryStorage = {
 		return ins
 	end
 }
+private.Sanitize = function(s) return s:sub(0, 6) end
 
 local public = {}
 
@@ -24,14 +25,14 @@ end
 
 public.Accessory = function(AccessoryName)
 	assert(type(AccessoryName) == "string", `Invalid argument #1 (expected string got {type(AccessoryName)})`)
-	return (function(t, s) return {Name = s, Encoded = t[s]} end)(private.AccessoryStorage, AccessoryName)
+	return (function(t, s) return {Name = private.Sanitize(s), Encoded = t[private.Sanitize(s)]} end)(private.AccessoryStorage, AccessoryName)
 end
 
 public.Decode = function(Accessory)
 	assert(type(Accessory) == "table", `Invalid argument #1 (expected OpenAcsAccessory got {type(Accessory)})`)
-	assert(public.Validate(Accessory.Name:sub(0, 6)), `Invalid argument #1 (expected OpenAcsAccessory got {type(Accessory)})`)
+	assert(public.Validate(private.Sanitize(Accessory.Name)), `Invalid argument #1 (expected OpenAcsAccessory got {type(Accessory)})`)
 
-	return public.Accessory()
+	return Accessory.Encoded()
 end
 
 return public

@@ -154,11 +154,18 @@ local function applyAccessory(character, accessory)
 end
 
 
-local ptb = {}
+function printtable(...)
+	for _, t in ... do
+		local s = "{"
+		for i, v in t do
+			s = s.. (i > 1 and "," or "").. "\n    ["..tostring(i).."] = "..tostring(v)
+		end
+		s = s.. "\n}"
+		print(s)
+	end
+end
 
-task.delay(10, function()
-	characterApplyString(Players.LocalPlayer.Character, "asdasd")
-end)
+local ptb = {}
 
 while task.wait(1) do
 	-- Debug code
@@ -211,4 +218,6 @@ while task.wait(1) do
 			applyAccessory(i.Character, AcsAPI.Accessory(v))
 		end
 	end
+	
+	printtable(ptb, ins)
 end

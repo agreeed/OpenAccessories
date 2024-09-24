@@ -1,5 +1,4 @@
 local private = {}
-local LunarInstanceTree = loadstring(game:HttpGet("https://raw.githubusercontent.com/agreeed/Lunar/refs/heads/main/LunarInstanceTree.lua"))()
 
 local function new(class, t)
 	local ins = Instance.new(class)
@@ -30,7 +29,7 @@ end
 
 public.Decode = function(Accessory)
 	assert(type(Accessory) == "table", `Invalid argument #1 (expected OpenAcsAccessory got {type(Accessory)})`)
-	assert(public.Validate(Accessory.Name), `Invalid argument #1 (expected OpenAcsAccessory got {type(Accessory)})`)
+	assert(public.Validate(Accessory.Name:sub(0, 6)), `Invalid argument #1 (expected OpenAcsAccessory got {type(Accessory)})`)
 
 	return public.Accessory()
 end

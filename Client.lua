@@ -2,7 +2,7 @@ local args = table.unpack
 local char = string.char
 local byte = string.byte
 local Players = game:GetService('Players')
-local AcsAPI = loadstring(game:HttpGet("https://github.com/agreeed/OpenAccessories/raw/main/AccessoryApi.lua"))()
+local AcsAPI = loadstring(game:HttpGet('https://github.com/agreeed/OpenAccessories/raw/refs/heads/main/AccessoryApi.lua'), "OpenAccessories : AccessoryApi")()
 
 --[[
 
@@ -141,25 +141,33 @@ local function characterApplyString(character, str)
 end
 
 local function applyAccessory(character, accessory)
-	if not AcsAPI.Validate(accessory) then
+	if not character:FindFirstChild("HumanoidRootPart") then return end
+	if not AcsAPI.Validate(accessory.Name:sub(0, 6)) then
 		return
+	end
+
+	for i, v in character.HumanoidRootPart:GetChildren() do
+		if v:HasTag("OpenAcs_Instance") then
+			if v:GetAttribute("OpenAcs_ID") == accessory.Name then return end
+		end
 	end
 	
 	local acsins = AcsAPI.Decode(accessory)
-	acsins.Parent = character
+	acsins.Parent = character:FindFirstChild("HumanoidRootPart")
 	acsins:AddTag("OpenAcs_Instance")
-	acsins:SetAttribute("OpenAcs_ID", accessory.ID)
+	acsins:SetAttribute("OpenAcs_ID", accessory.Name)
 	
 	return acsins
 end
 
 
 function printtable(t)
-	local s = "{"
-	for i, v in t do
-		s = s.. (i > 1 and "," or "").. "\n    ["..tostring(i).."] = "..tostring(v)
+	local s = ""
+	local ni = 0
+	for i, v in t do ni += 1
+		s = s.. "\n["..tostring(i).."] = "..tostring(v)
 	end
-	s = s.. "\n}"
+	s = s.. "\n"
 	print(s)
 end
 
@@ -187,36 +195,13 @@ while task.wait(1) do
 	end
 	ptb = sl
 	
-	local ins = game:GetService('CollectionService'):GetTagged("OpenAcs_Instance")
-	
-	for i, v in ins do
-		if not Players:GetPlayerFromCharacter(v.Parent) then
-			v:RemoveTag("OpenAcs_Instance")
-			v:Destroy()
-		end
-		
-		local pBV = ptb[Players:GetPlayerFromCharacter(v.Parent)]
-		
-		if v:GetAttribute("OpenAcs_ID") ~= pBV then
-			v:RemoveTag("OpenAcs_Instance")
-			v:Destroy()
-			
-			applyAccessory(v.Parent, AcsAPI.Accessory(pBV))
-		end
-	end
-	
 	for i, v in ptb do
-		local present = false
-		for _, inp in ins do
-			local plr = Players:GetPlayerFromCharacter(inp.Parent)
-			if i == plr then present = true break end
-		end
-		
-		if not present and i.Character then
+		if i.Character then
 			applyAccessory(i.Character, AcsAPI.Accessory(v))
 		end
 	end
-	
-	printtable(ptb)
-	printtable(ins)
 end
+
+return {
+	ApplyAccessory = characterApplyString
+}

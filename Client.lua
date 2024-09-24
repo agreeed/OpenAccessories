@@ -148,7 +148,12 @@ local function applyAccessory(character, accessory)
 
 	for i, v in character.HumanoidRootPart:GetChildren() do
 		if v:HasTag("OpenAcs_Instance") then
-			if v:GetAttribute("OpenAcs_ID") == accessory.Name then return end
+			if v:GetAttribute("OpenAcs_ID") == accessory.Name then
+				return
+			else
+				v:RemoveTag("OpenAcs_Instance")
+				v:Destroy()
+			end
 		end
 	end
 	

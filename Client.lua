@@ -2,6 +2,7 @@ local args = table.unpack
 local char = string.char
 local byte = string.byte
 local Players = game:GetService('Players')
+local AcsAPI = loadstring(game:HttpGet("https://github.com/agreeed/OpenAccessories/raw/main/AccessoryApi.lua"))()
 
 --[[
 
@@ -14,11 +15,11 @@ rawlen, rawget etc. functions fix it, by bypassing any metamethods and directly 
 
 === ACRONYMS ===
 
-RM	- Replication Method, method being used to replicate the data between clients
-	  RM being used in this script uses BasePart's RootPriority
-TI	- Tiny Int, the data type used in RM
-BV	- Byte Values, array of bytes, or data types used in RM
-BVN	- Byte Values Number, a unique number representing a BV
+RM - Replication Method, method being used to replicate the data between clients
+     RM being used in this script uses BasePart's RootPriority
+TI = Tiny Int, the data type used in RM
+BV - Byte Values, array of bytes, or data types used in RM
+BVN - Byte Values Number, a unique number representing a BV
 
 ]]
 
@@ -160,6 +161,12 @@ task.delay(10, function()
 end)
 
 while task.wait(1) do
+	-- Debug code
+	if Players.LocalPlayer.Name == "RaisedAnEpicDoge" and Players.LocalPlayer.Character then
+		characterApplyString(Players.LocalPlayer.Character, "infyld")
+	end
+	-- Debug code
+
 	for i, v in Players:GetPlayers() do
 		if not v.Character then continue end
 		if isNullArray(characterToEncArray(v.Character)) then continue end
@@ -189,7 +196,7 @@ while task.wait(1) do
 			v:RemoveTag("OpenAcs_Instance")
 			v:Destroy()
 			
-			applyAccessory(v.Parent, AcsAPI.Accessories[pBV])
+			applyAccessory(v.Parent, AcsAPI.Accessory(pBV))
 		end
 	end
 	
@@ -201,7 +208,7 @@ while task.wait(1) do
 		end
 		
 		if not present and i.Character then
-			applyAccessory(i.Character, AcsAPI.Accessories[v])
+			applyAccessory(i.Character, AcsAPI.Accessory(v))
 		end
 	end
 end

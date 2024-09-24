@@ -217,5 +217,6 @@ while task.wait(1) do
 		end
 	end
 	
-	printtable(ptb, ins)
+	printtable(ptb)
+	printtable(ins)
 end

@@ -30,7 +30,6 @@ end
 
 public.Decode = function(Accessory)
 	assert(type(Accessory) == "table", `Invalid argument #1 (expected OpenAcsAccessory got {type(Accessory)})`)
-	assert(type(Accessory.Name) == "string" and type(Accessory.Encoded) == "function", `Invalid argument #1 (expected OpenAcsAccessory got {type(Accessory)})`)
 	assert(public.Validate(Accessory.Name), `Invalid argument #1 (expected OpenAcsAccessory got {type(Accessory)})`)
 
 	return public.Accessory()

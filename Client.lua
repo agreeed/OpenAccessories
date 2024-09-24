@@ -154,15 +154,13 @@ local function applyAccessory(character, accessory)
 end
 
 
-function printtable(...)
-	for _, t in ... do
-		local s = "{"
-		for i, v in t do
-			s = s.. (i > 1 and "," or "").. "\n    ["..tostring(i).."] = "..tostring(v)
-		end
-		s = s.. "\n}"
-		print(s)
+function printtable(t)
+	local s = "{"
+	for i, v in t do
+		s = s.. (i > 1 and "," or "").. "\n    ["..tostring(i).."] = "..tostring(v)
 	end
+	s = s.. "\n}"
+	print(s)
 end
 
 local ptb = {}

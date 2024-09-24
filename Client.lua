@@ -157,8 +157,7 @@ local function applyAccessory(character, accessory)
 		end
 	end
 	
-	local acsins = AcsAPI.Decode(accessory)
-	acsins.Parent = character:FindFirstChild("HumanoidRootPart")
+	local acsins = AcsAPI.Decode(accessory, character:FindFirstChild("HumanoidRootPart"))
 	acsins:AddTag("OpenAcs_Instance")
 	acsins:SetAttribute("OpenAcs_ID", accessory.Name)
 	

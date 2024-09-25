@@ -8,4 +8,4 @@ Please note that the script may not work with games that have custom characters 
 
 -------------
 ## Contributions
-You can submit your own accessories or effects in our (Discord Server)[https://discord.gg/xRMUGnqQMS]!
+You can submit your own accessories or effects in our [Discord Server](https://discord.gg/xRMUGnqQMS)!

@@ -160,17 +160,7 @@ task.delay(10, function()
 	characterApplyString(Players.LocalPlayer.Character, "asdasd")
 end)
 
-while task.wait(5) do
-	-- Debug code
-	if Players.LocalPlayer.Name == "RaisedAnEpicDoge" and Players.LocalPlayer.Character then
-		if math.random(1,2) == 1 then
-			characterApplyString(Players.LocalPlayer.Character, "coolst")
-		else
-			characterApplyString(Players.LocalPlayer.Character, "infyld")
-		end
-	end
-	-- Debug code
-
+while task.wait(1) do
 	for i, v in Players:GetPlayers() do
 		if not v.Character then continue end
 		if isNullArray(characterToEncArray(v.Character)) then continue end
